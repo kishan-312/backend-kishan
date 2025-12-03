@@ -12,7 +12,9 @@ const githubData = {
     users: [
       { id: 1, name: "Darshan Patel", email: "darshan@example.com", role: "admin" },
       { id: 2, name: "Bansi Patel", email: "bansi@example.com", role: "user" },
-      { id: 3, name: "Vignesh Patel", email: "vignesh@example.com", role: "user" }
+      { id: 3, name: "Vignesh Patel", email: "vignesh@example.com", role: "user" },
+      { id: 4, name: "monil tandel", email: "monil@example.com", role: "user" },
+      { id: 5, name: "sunil suthar", email: "monil@example.com", role: "user" },
     ],
     timestamp: "2025-12-03T14:50:00Z"
   }
