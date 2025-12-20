@@ -1,0 +1,230 @@
+/// online mongodb atlas version (free)
+/// community server download karvu not enterprise 
+// and select nework option when u install mongodb 
+/// mongodb community server + mongodb compass (collections,run queries,insert delete document)
+// download from here : https://www.mongodb.com/try/download/community
+// default port mongodb://localhost:27017 (27017=port)
+/// community server = database, compass = gui 
+
+1. atlas = online database 2. community server = offline  database 3. compass = gui 
+2.  gui = visual screens 
+
+/////  connect mongodb atlas to mongodb community server (compass gui)
+
+1. signin atlas
+2. click clusters
+3. connect 
+
+
+//// add connection kare to 3 vastu aave 
+1. admin, config, local 
+
+
+/// steps by steps 
+1. add connection (click on this)
+2.  so popup , uri , give name like Local MongoDB, 
+3. ignore advanced options 
+4. save and connect click 
+
+
+/// connection = link between compass and mongodb community server 
+
+server = stores  data  (database engine)
+compass = shows datas 
+database -> collection -> document -> fields 
+
+=== database = folder that contains many fiels 
+=== collection = like table (group of documents) ex. users
+=== document (single record )
+=== field =  key-value pairs 
+=== mongodb stores data as bson(binary json)
+=== u write json mongodb store as bson 
+
+==== local mongodb is name of connection in compass 
+
+=== so local,config,admin is system database not our 
+
+============= after connection upper see 3 options (sheel,)
+
+
+=== delete projects 
+- in settings below delete 
+
+
+===== atlas organization ======
+
+1. project 
+2. cluster 
+3. database
+4. connection 
+
+
+==== to delete projects first u want to delete clusters 
+- three dots and terminate clusters
+- then delete projects 
+
+
+1. project = container for one app 
+2. cluster = server that host database (mongodb server environment)
+
+
+===== mongodb atlas terms 
+1. mongodb atlas = host databases 
+2. organization = when u signup see this 
+3. project = for one app 
+4. cluster = mongodb database server (local or cloud)
+5. database = holds collections 
+6. collection = table 
+7. document = single row 
+8. field = key-value 
+
+
+========================
+
+1. create project first ( give name)
+2. cluster create (free version)
+3. then connect to cluster 
+4. then give name password 
+5. access your datas through compass 
+
+/// connection link : mongodb+srv://kishan:123@cluster0.ty3eveo.mongodb.net/
+
+
+no clusters === no database or no data 
+=== clusters =  computer where db runs 
+
+
+mongodb+srv://kishan:123@cluster0.xvnirh4.mongodb.net/mydatabase
+
+- mongodb+srv = protocol that  use srv connection format (find servers in your clusters)
+- username:password 
+- cluster address 
+
+protocol://username:password@cluster-address/db-name 
+
+1. create project 
+2. cluster create 
+3. database access , network access 
+
+
+=== mongodb behind the scene aws ke pass jata hai , aapka database vaha pe jo software, requirements, connection strings
+automatic create kare 
+=== mongodb ne aws se connection kar diya but muje bhi to hona hai username,password 
+
+=== kai connection baki rahi gayu hoi to quick start ma joi levanu 
+
+-- environment = local , ip = 0.0.0.0/0 (sabko access)
+
+
+PORT=8000
+MONGODB_URI=mongodb+srv://kishan:123@cluster0.ty3eveo.mongodb.net 
+
+(aama ending slash n chahiye)
+
+=== after connection lists i need database name 
+=== database name in constants.js 
+
+==== occhu sensitive hoi to constants ma muko 
+
+=== database connection 2 rete thai 
+1 .index file ma direct ya to 2. db ma logic then call karavo 
+
+
+app = express ke threw 
+db = mongoose ke threw 
+
+
+==== mongoose use to connect database 
+
+mongoose.connect 
+
+=== mongoose ne try catch ma lo ya to promise then and catch 
+=== database other contenint show await need 
+=== database se baat kare to time lage because mumbai/us kya che to hamne su khabar 
+
+=== function banavo connectDb 
+=== iffee also use also fun call 
+
+=== if db connect then app.on or not , app start then listen app 
+=== process means current process chal rahi uska reference 
+=== process.exit() = process chalti tyathi bahar nikdi gaya 
+=== exit na pan code hoi like 1,2,0 etc but we use 1 
+=== store karo connection ne connection_instance 
+
+1. connection_instance 
+2. console karo connection_instance
+3. mongodb ka  url milega connectionInstance.connection.host 
+
+=== datbase production no alag , development no alag , testing no alag ,
+
+=== dotenv ne jaldi load karva pade app start thai aetle j 
+=== so index file ma jem bane tem jaldi load karavu 
+=== config ma pan path aave 
+
+=== import ma .js extension important 
+.env ma change kare but nodemon restart kare to pan changes propagate n thai  , restart karva pade manually 
+
+=== app.js ma app banavani 
+
+=== async vastu promise return karta hai 
+
+=== database connection thai to .then and catch karvu 
+=== connection thai jai to then ke under app.listen server start and catch ma error ma aave 
+
+
+=== req,res (request and response)
+(req.params,req.body,req.query,req.cookies, server se kaise cookies store karave user na browser ma)
+
+middleware lagava pade express.json , and cookie mate pan cookie.parser(), 
+
+=== middleware  use with app.use()
+
+=== app.use()  use with middleware and configuration 
+
+=== cors ma kis origin se frontend ka link accept kar sakta hu 
+=== proper origin muko ya to * rakhdo 
+=== credentials : true means cookie and authorization headers allowed 
+
+==== data kai rete aavi sake 
+1. url se aavi sake
+2. json ma aave 
+3. body ma aave (form submit kare tyare)
+4. direct form ya to json form 
+
+// aa mate settings karva pade ketla json aavi sake limit su , ne badhu 
+// limit hoi to server crash n thai aanathi 
+
+// json to thayu because file to aave 
+// file upload config thai multer thi 
+// file ke leye express ready nahi to multer 
+
+
+/// express.json() = form bhare tyare nu but url thi aave to 
+/// url thi data aave to (example kishan mistry , to url ma thai jai kishan+mistry so use urlencoder)
+/// urlencoded ni under extended means object ni under object use kari sako and limit also 16kb 
+
+/// files,folder server ma store karvu che to use static 
+/// static ni under folder name 
+
+/// cookieparser thi = server se user ka browser ki cookie access kar pavu and set pan kar pavu (crud) 
+/// secure cookie user na browser ma mokli saku and aa cookie ne server j read kari paye , and remove pan server kari paye
+
+/// middleware == req.get lakhye ya req.post uske baad fun run hoga particular route par 
+
+
+/// 1 url mere pass aayi or send kar diya res but me kuch process karvana chahta hu bich me response se pehele 
+// aap response ke leye capable ho ya nahi means login ho ya nahi or any other 
+
+=== bich me jo check karte usko middleware bolte hai 
+=== 2-3 vastu check kare like login but and ae user admin or user che te pan check thai 
+== middleware laganeka sequence hota hai iske baad ye check karo 
+=== (req,res) ni jagyaye (err,req,res,next)  
+
+=== next use for middleware 
+=== ye banda kaam karlega to next kardo 
+
+
+=== database thi baar baar baat karisu to erro mate nu method batave 
+
+
+

@@ -1,0 +1,39 @@
+//// professional setup
+
+1. git init -y
+2. public/images/.gitkeep (upload karva mate 3rd party services use karo ) = images/file ne upload karavo cloudinary , temperary store in server 
+3. jo connection lose thayu to image server ma to rahe (user upload kare file temporary server par rahe and then cloudinary par jai )
+4. public(folder)/temp(folder)/.gitkeep(file)
+5. gitkeep why because github khali folder n jai 
+6. gitignore (  aama gitignore generators mathi -> nodejs search karvu  )
+7. giignore ma check karvanu (example dekhase .env)
+8. have directory files/folder src folder rakho instead of bahar 
+9. have src folder ma command touch thi 3 file banavo ( index.js = db connection and config , app.js = routes i think , constants.js = if not in .env put in this  )
+10. have src ma folders (middleware,db,routes,utils,controllers,models), (using mkdir thi )
+11. pacakges install karo (nodemon,express,mongoose,dotenv,cors etc.)
+12. dev dependencies means development ma use only not in production
+13. src/index.js so aa setup package ma kardo nodemon src/index.js
+14. prettier formatting(file,folder) like spacing,comma,semicolon etc... (proper formatting mate)
+15. prettier install (-D ) file name aapo .prettierrc = aema configuration lakho
+16. 
+
+{
+
+    "singleQuote" : false,
+    "bracketSpacing" : true,
+    "tabWidth" : 2,
+    "semi" : true,
+    "traillingComma" : "es5"
+
+}
+17. prettierignore kai kai file ma implement nathi karvanu prettier (prettier ignore nu pan mali jai like gitignore generators)
+*.env
+.env
+.env.*
+/node_modules
+/.vscode (vscode settings)
+
+.prettierignore
+
+
+

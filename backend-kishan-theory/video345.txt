@@ -1,0 +1,569 @@
+/// render,netlify par kardo 
+/// frontend beja par and backend beja par deploy 
+/// toolchain , cors su hoi 
+
+
+/// code sync way and async way lavi sakai 
+// required synatx thi code  syn aave , import thi async aave 
+
+import express from "express"
+import dotenv from "dotenv"
+
+dotenv.config()
+const app = express() ;
+
+const PORT = process.env.PORT || 4000 ;
+
+app.get("/" , (req,res) => {
+
+    res.send("hello baby")
+
+} )
+
+app.get("/jokes" , (req,res) => {
+
+    const jokes = [
+
+        {
+
+            id : 1 ,
+            title : "joke1",
+            content : "this is 1st joke"
+
+        },
+
+        {
+
+            id : 2 ,
+            title : "joke2",
+            content : "this is 2nd joke"
+
+        },
+
+        {
+
+            id : 3 ,
+            title : "joke3",
+            content : "this is 3rd joke"
+
+        },
+
+        {
+
+            id : 4 ,
+            title : "joke4",
+            content : "this is 4th joke"
+
+        },
+
+    ]
+
+    res.send(jokes)
+
+} )
+
+app.listen(PORT, () => {
+
+    console.log(`server running at  http://localhost:${PORT}`);
+    
+
+} )
+
+/// frontend alag alag toolchain thi thai
+// toolchain bundle karne me help karta hai because browser samje html,css,js , so bundler convert into js and bundle kari dai 
+
+/// axios use karo production level features aema hoi 
+// mainly use for webrequest 
+// failed hoga tab kya situation ya to loading hoga tab kya situation 
+// bich me data ko rok ke add karna hoto 
+// koi ma aem aave ke aa request jai to usko bich me roko and tema add kardo api keys 
+
+/// react query best ()
+
+/// aa type ni error aave jyare frontend backend connect kare tyare 
+
+Failed to load resource: net::ERR_CONNECTION_REFUSEDUnderstand this error
+App.jsx:10 TypeError: Failed to fetch
+    at App.jsx:10:6
+    at Object.react_stack_bottom_frame (react-dom_client.js?v=9a87a262:18565:20)
+    at runWithFiberInDEV (react-dom_client.js?v=9a87a262:995:72)
+    at commitHookEffectListMount (react-dom_client.js?v=9a87a262:9409:163)
+    at commitHookPassiveMountEffects (react-dom_client.js?v=9a87a262:9463:60)
+    at commitPassiveMountOnFiber (react-dom_client.js?v=9a87a262:11038:29)
+    at recursivelyTraversePassiveMountEffects (react-dom_client.js?v=9a87a262:11008:13)
+    at commitPassiveMountOnFiber (react-dom_client.js?v=9a87a262:11199:13)
+    at recursivelyTraversePassiveMountEffects (react-dom_client.js?v=9a87a262:11008:13)
+    at commitPassiveMountOnFiber (react-dom_client.js?v=9a87a262:11064:13)
+:3000/jokes:1  Failed to load resource: net::ERR_CONNECTION_REFUSEDUnderstand this error
+App.jsx:10 TypeError: Failed to fetch
+    at App.jsx:10:6
+    at Object.react_stack_bottom_frame (react-dom_client.js?v=9a87a262:18565:20)
+    at runWithFiberInDEV (react-dom_client.js?v=9a87a262:995:72)
+    at commitHookEffectListMount (react-dom_client.js?v=9a87a262:9409:163)
+    at commitHookPassiveMountEffects (react-dom_client.js?v=9a87a262:9463:60)
+    at reconnectPassiveEffects (react-dom_client.js?v=9a87a262:11271:13)
+    at recursivelyTraverseReconnectPassiveEffects (react-dom_client.js?v=9a87a262:11238:11)
+    at reconnectPassiveEffects (react-dom_client.js?v=9a87a262:11315:13)
+    at doubleInvokeEffectsOnFiber (react-dom_client.js?v=9a87a262:13337:135)
+    at runWithFiberInDEV (react-dom_client.js?v=9a87a262:995:72)
+
+//// cors errors 
+/// cors doesn't allow 
+/// only origin vada ne allow kare 
+
+//// cross origin resource sharing
+//// client and server no domain alag alag hoi to (domain ya to port means host alag) 
+//// koi bhi thodi request kar sakta hai 
+//// server pe bil lagta hai bandwidth ka , so badha ne allow n hoi request karvanu 
+/// url alag, port alag, domain alag to cross origin kevai 
+
+
+
+//// origin na kuch solution che 
+1. backend thi whitelists (* pan thai sake badha access thai sake like api.github.com) (ip, domain whitelists, ya to special name)
+2. 
+
+//// backend ma package install karo cors 
+npm i cors 
+and usages dekho uske (kaise whitelists ) kisko allow karo vo sab 
+
+https://www.npmjs.com/package/cors
+
+(alloworigin)
+
+/// aato backend thi whitelists thi 
+/// whitelisting nu dhyan ae rakhva pade ke localhost ma kai rete and production ma kai rete (because port change thai jai)
+
+1. whitelists (sabka whitelists karva pade)
+2. proxy 
+
+
+They are the most common, but there are multiple ways to allow frontend ↔ backend communication.
+
+Let me explain all 4 ways clearly.
+
+✅ 1️⃣ CORS (Cross-Origin Resource Sharing)
+
+Used when frontend (React) and backend (Express) run on different domains or ports.
+
+Example:
+Frontend → http://localhost:5173  
+Backend  → http://localhost:3000
+
+
+Then you need:
+
+cors() on backend
+OR
+
+allow specific origins (whitelisting)
+
+✔ Easiest for dev
+✔ Standard method
+✖ Must configure correctly
+
+✅ 2️⃣ Proxy (React → Backend)
+
+React sends API calls to frontend server, and frontend proxies to backend.
+
+Example (vite.config.js)
+server: {
+  proxy: {
+    "/api": "http://localhost:3000"
+  }
+}
+
+
+✔ Avoids CORS
+✔ Simple in development
+✖ Not used in production (CDN + different domains)
+
+🟦 But there are more than 2 ways!
+✅ 3️⃣ Same-Origin Deployment (No CORS Needed)
+
+Put frontend & backend under the same domain.
+
+Example:
+myapp.com
+ ├── serves React build
+ └── /api routes handled by Node backend
+
+
+✔ No CORS
+✔ Very clean
+✔ Best for production
+
+This uses:
+
+Backend serves frontend build folder
+
+✅ 4️⃣ API Gateway / Reverse Proxy
+
+Examples:
+
+NGINX
+
+Apache
+
+Cloudflare
+
+AWS API Gateway
+
+Vercel / Netlify Edge
+
+How it works:
+Frontend → NGINX → Backend
+
+
+The gateway makes both appear as same origin.
+
+✔ Very secure
+✔ Used in real companies
+✔ Handles routing, caching, SSL
+✖ Needs server setup knowledge
+
+🟩 Summary Table
+Method	Use Case	CORS Needed?	Difficulty
+CORS	Different ports/domains in dev	Yes	Easy
+React Proxy	Dev environment	No	Easy
+Same-Origin Deployment	Production full-stack	No	Medium
+Reverse Proxy / API Gateway	Professional apps	No	Medium/Hard
+⭐ Best Choice For You (Based on your MERN projects)
+
+Since you are building React + Node, use:
+
+Development
+
+✔ Proxy (Vite)
+✔ OR CORS on backend
+
+Production
+
+✔ Serve React build from Express
+OR
+✔ Use NGINX reverse proxy
+
+/// /api/jokes (api start like this)
+
+  fetch("http://localhost:3000/api/jokes").then((data) => data.json() ).then(setJokes).catch((err) => console.log(err)
+      ) 
+
+aani jagyaye aa  fetch("/api/jokes").then((data) => data.json() ).then(setJokes).catch((err) => console.log(err)
+      ) 
+
+=== because agadi no part change thaya kare production ma alag and localhost ma alag 
+=== common part rakhvo only 
+
+=== proxy use thai ( proxy append thai (variable) aa common che but aanu standard way karvu )
+
+
+==== proxy create react app or vite thi pan banavai 
+==== proxy 1 object che /api par request kare to server to localhost append karo 
+
+To connect your frontend → backend, developers mainly use 3 common methods:
+
+✅ 1. PROXY (Most common & easiest – use this!)
+Best when:
+
+Frontend = React / Vite / Next.js dev server
+
+Backend = Node, Express
+
+Running locally, different ports (ex: 5173 → 3000)
+
+Why proxy?
+
+Because browsers block cross-origin requests (CORS).
+A proxy hides the backend behind the same domain.
+
+Example (Vite)
+
+vite.config.js:
+
+export default defineConfig({
+  server: {
+    proxy: {
+      "/api": "http://localhost:3000",
+    },
+  },
+});
+
+
+Request from frontend:
+
+fetch("/api/users")
+
+
+🎉 No CORS error
+🎉 No need whitelist
+🎉 Works directly
+
+👉 Proxy is 95% of the time the best choice for development.
+
+✅ 2. CORS + Whitelist (For production / secure backend)
+
+Use this when:
+
+Your backend should only allow requests from specific domains
+
+Example: React app hosted on Netlify → Backend hosted on Render
+
+Express example:
+import cors from "cors";
+
+app.use(cors({
+  origin: ["https://your-frontend-site.com", "http://localhost:5173"]
+}));
+
+
+This is called a CORS whitelist.
+
+When to use whitelist?
+
+✔ Deployment
+✔ Security
+✔ Allowing only trusted domains
+
+✅ 3. Direct API URL (No proxy)
+
+Simply call your backend directly:
+
+fetch("https://your-backend-url.onrender.com/api/users")
+
+Works when:
+
+CORS is enabled on backend
+
+You are deployed on real servers
+
+Not good for:
+
+❌ Local development (CORS errors often happen)
+
+🔥 BEST PRACTICE (Simple Guide)
+During Development (LOCAL)
+
+✔ Use proxy
+✔ No CORS needed (optional)
+
+During Deployment (LIVE)
+
+✔ Use CORS whitelist
+✔ Use full backend URL
+❌ Do not use proxy — it's only for local dev
+
+🎯 Final Recommendation
+Environment	Best Method
+Local Dev	⭐ Proxy
+Production	⭐ CORS Whitelist
+Using same domain/server	Not needed (already safe)
+
+/// best is cors not proxy (pr)
+/// proxy for backend , cors for frontend 
+/// server ko lagega same origin thi aave che (for proxy)
+
+/// bad practice frontend and backend 1 ma j kari dei  
+/// express thi static use kari lai but aa badhu wrong ways 
+
+
+//// kai pan chalu kare to questions thavu joye 
+//// fields define karo proper (data schema)
+//// kya ham store karne wale hai (  )
+//// models pehla ready karo 
+
+
+//// mongoose use karvana che 
+
+1. data kaise store karuga/ kya store karuga 
+2. data modeling ( data ka structure define karna )
+
+(kya data jase but ae data nu structure kevu che ae data modeling (moon modeler))
+
+==== user, doctor, patient, patient ni medical history mate fields kai aavse aa badhu aave modeling ma
+
+==== akhela backend developer nahi hota data modeler alag se hota hai 
+==== data modeler = kaise data arrange hoga data database me 
+
+==== luna modeler = code automatic generate thai jai, tame field generate karo and aa automatic structure generate thai jai
+==== so tamare database nu diagram hovu joye har 1 field mate alag alag 
+
+/// eraser.io ( free verion and paid version )
+/// moon modeler paid che syntax same aape mongoose ni , but eraser syntax alag aape 
+
+/// diagram banavo data no 
+
+/// register mate first karo baad ma login
+/// users se kya kya loge pehle vo dekho 
+
+// mongoose 
+
+// local kuch install nahi karna ho and Environment available thai jai online to use 
+1. github codeSpaces
+2. code sandbox
+3. stack blitz 
+
+//// stackblitz best , code sandbox after stackblitz best then  github codeSpaces best   
+
+//// atyare khali kaam models ready karvanu , data kaise daluga vo kaam hota hai controllers ka
+//// to create structure need models 
+
+//// model files structure :::: 
+models folder , inside models todos , inside todos todo.models.js, sub_todo.models.js, user.models.js 
+
+//// mongoose thi model kai rete bane and export kai rete thai 
+
+1. import mongoose from "mongoose"
+2. const todosSchema = new mongoose.schema({})
+3. export const User = mongoose.model("User", todosSchema)
+/// model ni under 2 vastu 1. kya model banavu 2. kiske base pe banavu 
+/// aa model mutiple jagyaye use thai 
+
+
+
+//// 3 vastu common 1. import mongoose 2. schema 3. model ni under 2 vastu  (model,base)
+
+// aa schema multiple jagyaye use thai 
+// user ko baar baar use karte hai 
+
+// aa model vali file run thai automatic jyare database sathe connect thai aa model 
+/// User ni jagyaye model name plural and lowercase ma dekhai 
+
+///strucure create karo and then data 
+/// username : string aa rete pan lakhai 
+/// username : {
+
+    required :  true ,
+    unique : true ,
+    type : string ,
+    lowercase : true 
+
+
+}
+
+
+//// writing mongodb validation
+
+have tamare message moklvo che to use  array example :
+min : [6, "must be at least 6 characters"]
+enum for fixed values 
+=== required ma pan aave custom message 
+
+//// mongodb ma power n hoi aetli badhi so mongoose use kare 
+
+import mongoose from 'mongoose';
+
+const userSchema = new mongoose.Schema({
+  username: {
+    required: [true, 'username is required'],
+    unique: true,
+    lowercase: true,
+    type: String,
+  },
+
+  email: {
+    required: [true, 'email is required'],
+    unique: true,
+    lowercase: true,
+    type: String,
+  },
+
+  password: {
+    required: [true, 'password is required'],
+    type: String,
+  },
+});
+
+export const User = mongoose.model('User', userSchema);
+
+
+//// user registered ho raha to or bhi chize store karna chah raha hu 
+//// user kab aaya kab modify hua 
+
+//// createdAt and updatedAt aape timestampes : true 
+//// every field have this timestampes 
+
+//// first object for field and 2nd object for timestampes 
+//// model name and kiske base pe hai 
+
+//// document banavta  to aavdu but relate karna nahi sikha hai 
+//// 1 model depend on other hoi to special type aapvo and reference 
+
+
+/// mongoose.Schema.Types.ObjectId, 
+/// ref = ""
+/// model create kare tyare name hoi ae 
+/// subTodos mate array object and aa object na type and aa object ma type,ref 
+
+import mongoose from 'mongoose';
+
+const userSchema = new mongoose.Schema(
+  {
+    username: {
+      required: true,
+      type: String,
+      unique: true,
+      lowercase: true,
+    },
+
+    email: {
+      required: true,
+      type: String,
+      unique: true,
+      lowercase: true,
+    },
+
+    password: {
+      required: true,
+      type: String,
+    },
+  },
+
+  {
+    timestamps: true,
+  }
+);
+
+export const User = mongoose.model('User', userSchema);
+,
+
+import mongoose from 'mongoose';
+
+const todoSchema = new mongoose.Schema(
+  {
+    content: {
+      type: String,
+      required: true,
+    },
+
+    complete: {
+      type: Boolean,
+      default: false,
+    },
+
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+
+    subTodos: [{}],
+  },
+  {
+    timestamps: true,
+  }
+);
+
+export const Todos = mongoose.model('Todos', todoSchema);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
